@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Cadastro from './Paginas/Cadastro';
+import Login from './Paginas/Login';
+import Dashboard from './Paginas/Dashboard';
+import PropriedadesIntelectuais from './Paginas/PropriedadesIntelectuais';
+import PatenteDetalhes from "./Paginas/PatenteDetalhes"; // <- componente de detalhes
+import CadastroPI from './Paginas/CadastroPI.jsx';
+import Payments from './Paginas/Payments';
+import Autor from './Paginas/Autor';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/cadastro" element={<Cadastro />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+       <Route path="/propriedade-intelectual" element={<PropriedadesIntelectuais />} />
+        <Route path="/detalhes/:id" element={<PatenteDetalhes />} />
+        <Route path="/cadastro-pi" element={<CadastroPI />} /> 
+         <Route path="/pagamentos" element={<Payments />} />
+        <Route path="/autores" element={<Autor />} /> {/* Esta é a nova rota para o Autor.jsx */}
+
+      </Routes>
+    </Router>
   );
 }
 
