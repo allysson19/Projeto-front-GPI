@@ -79,6 +79,7 @@
 .pendente { background: #ffb3b3; }
 .total { background: #b7ddf4; }
 
+
 .graficos {
   display: flex;
   gap: 20px;
@@ -147,7 +148,19 @@
   margin-bottom: 10px;
   font-size: 14px;
 }
+.top-icons button {
+  font-size: 28px;             /* tamanho maior do ícone */
+  background: transparent;     /* sem fundo */
+  border: none;                /* sem borda */
+  cursor: pointer;             /* cursor de clique */
+  padding: 6px;                /* espaço interno */
+  border-radius: 6px;          /* cantos arredondados */
+  transition: background-color 0.2s ease; /* transição suave no hover */
+}
 
+.top-icons button:hover {
+  background-color: #eee;     /* fundo claro ao passar o mouse */
+}
 .nova { border-left: 4px solid red; }
 .nova-pi { border-left: 4px solid green; }
 .status { border-left: 4px solid blue; }

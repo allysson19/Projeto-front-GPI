@@ -1,77 +1,69 @@
 import React, { useState } from 'react';
 import Sidebar from '../Components/Sidebar';
-import RegisterAuthorModal from '../Components/RegisterAuthorModal'; // Importe o modal de cadastro
-import UpdateAuthorModal from '../Components/UpdateAuthorModal';     // Importe o modal de edição
-import './Autor.css'; // Seu CSS para a página de autores
+import RegisterAuthorModal from '../Components/RegisterAuthorModal';
+import UpdateAuthorModal from '../Components/UpdateAuthorModal';
+import './Autor.css';
 
 export default function Autor() {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
-    const authorsPerPage = 4;
+    const [termoBusca, setTermoBusca] = useState('');
+    const [paginaAtual, setPaginaAtual] = useState(1);
+    const autoresPorPagina = 4;
 
-    const [showRegisterModal, setShowRegisterModal] = useState(false); // Estado para o modal de cadastro
-    const [showUpdateModal, setShowUpdateModal] = useState(false);     // Estado para o modal de edição
-    const [selectedAuthor, setSelectedAuthor] = useState(null);       // Estado para o autor selecionado para edição
+    const [mostrarModalCadastro, setMostrarModalCadastro] = useState(false);
+    const [mostrarModalEdicao, setMostrarModalEdicao] = useState(false);
+    const [autorSelecionado, setAutorSelecionado] = useState(null);
 
-    // Dados fictícios dos autores (adicionei mais alguns para testar a paginação)
-    const [allAuthors, setAllAuthors] = useState([
-        { id: '01', name: 'Fulano de Tal', email: 'email@email.com', institution: 'Universidade do Estado do Rio Grande do Norte', registeredPIs: 2, bond: 'Docente', department: 'Departamento de Informática', campus: 'Mossoró', university: 'UERN' },
-        { id: '02', name: 'Beltrano da Silva', email: 'beltrano@email.com', institution: 'Universidade Federal Rural do Semi-Árido', registeredPIs: 3, bond: 'Discente Graduação', department: 'Engenharia Civil', campus: 'Caraúbas', university: 'UFERSA' },
-        { id: '03', name: 'Cicrano Santos', email: 'cicrano@email.com', institution: 'Universidade Federal do Rio Grande do Norte', registeredPIs: 4, bond: 'Técnico', department: 'Biblioteca Central', campus: 'Natal', university: 'UFRN' },
-        { id: '04', name: 'Maria Oliveira', email: 'maria@email.com', institution: 'Universidade do Estado do Rio Grande do Norte', registeredPIs: 2, bond: 'Discente Pós-Graduação', department: 'Ciência da Computação', campus: 'Mossoró', university: 'UERN' },
-        { id: '05', name: 'João Batista', email: 'joao@email.com', institution: 'Instituto Federal do Rio Grande do Norte', registeredPIs: 1, bond: 'Docente', department: 'Engenharia de Software', campus: 'Macau', university: 'IFRN' },
-        { id: '06', name: 'Ana Costa', email: 'ana@email.com', institution: 'Universidade do Estado do Rio Grande do Norte', registeredPIs: 5, bond: 'Discente Graduação', department: 'Pedagogia', campus: 'Pau dos Ferros', university: 'UERN' },
-        { id: '07', name: 'Pedro Souza', email: 'pedro@email.com', institution: 'Universidade Federal Rural do Semi-Árido', registeredPIs: 3, bond: 'Técnico', department: 'Contabilidade', campus: 'Mossoró', university: 'UFERSA' },
-        { id: '08', name: 'Mariana Lima', email: 'mariana@email.com', institution: 'Universidade Federal do Rio Grande do Norte', registeredPIs: 2, bond: 'Docente', department: 'Artes', campus: 'Natal', university: 'UFRN' },
-        { id: '09', name: 'Lucas Pereira', email: 'lucas@email.com', institution: 'Universidade do Estado do Rio Grande do Norte', registeredPIs: 6, bond: 'Discente Pós-Graduação', department: 'Química', campus: 'Assu', university: 'UERN' },
-        { id: '10', name: 'Carla Nunes', email: 'carla@email.com', institution: 'Instituto Federal do Rio Grande do Norte', registeredPIs: 1, bond: 'Docente', department: 'Mecatrônica', campus: 'Apodi', university: 'IFRN' },
+    const [todosAutores, setTodosAutores] = useState([
+        { id: '01', nome: 'Fulano de Tal', email: 'email@email.com', universidade: 'Universidade do Estado do Rio Grande do Norte', pisRegistradas: 2, vinculo: 'Docente', departamento: 'Departamento de Informática', campus: 'Mossoró', siglaUniversidade: 'UERN' },
+        { id: '02', nome: 'Beltrano da Silva', email: 'beltrano@email.com', universidade: 'Universidade Federal Rural do Semi-Árido', pisRegistradas: 3, vinculo: 'Discente Graduação', departamento: 'Engenharia Civil', campus: 'Caraúbas', siglaUniversidade: 'UFERSA' },
+        { id: '03', nome: 'Cicrano Santos', email: 'cicrano@email.com', universidade: 'Universidade Federal do Rio Grande do Norte', pisRegistradas: 4, vinculo: 'Técnico', departamento: 'Biblioteca Central', campus: 'Natal', siglaUniversidade: 'UFRN' },
+        { id: '04', nome: 'Maria Oliveira', email: 'maria@email.com', universidade: 'Universidade do Estado do Rio Grande do Norte', pisRegistradas: 2, vinculo: 'Discente Pós-Graduação', departamento: 'Ciência da Computação', campus: 'Mossoró', siglaUniversidade: 'UERN' },
+        { id: '05', nome: 'João Batista', email: 'joao@email.com', universidade: 'Instituto Federal do Rio Grande do Norte', pisRegistradas: 1, vinculo: 'Docente', departamento: 'Engenharia de Software', campus: 'Macau', siglaUniversidade: 'IFRN' },
+        { id: '06', nome: 'Ana Costa', email: 'ana@email.com', universidade: 'Universidade do Estado do Rio Grande do Norte', pisRegistradas: 5, vinculo: 'Discente Graduação', departamento: 'Pedagogia', campus: 'Pau dos Ferros', siglaUniversidade: 'UERN' },
+        { id: '07', nome: 'Pedro Souza', email: 'pedro@email.com', universidade: 'Universidade Federal Rural do Semi-Árido', pisRegistradas: 3, vinculo: 'Técnico', departamento: 'Contabilidade', campus: 'Mossoró', siglaUniversidade: 'UFERSA' },
+        { id: '08', nome: 'Mariana Lima', email: 'mariana@email.com', universidade: 'Universidade Federal do Rio Grande do Norte', pisRegistradas: 2, vinculo: 'Docente', departamento: 'Artes', campus: 'Natal', siglaUniversidade: 'UFRN' },
+        { id: '09', nome: 'Lucas Pereira', email: 'lucas@email.com', universidade: 'Universidade do Estado do Rio Grande do Norte', pisRegistradas: 6, vinculo: 'Discente Pós-Graduação', departamento: 'Química', campus: 'Assu', siglaUniversidade: 'UERN' },
+        { id: '10', nome: 'Carla Nunes', email: 'carla@email.com', universidade: 'Instituto Federal do Rio Grande do Norte', pisRegistradas: 1, vinculo: 'Docente', departamento: 'Mecatrônica', campus: 'Apodi', siglaUniversidade: 'IFRN' },
     ]);
 
-    // Lógica de filtro pela barra de busca
-    const filteredAuthors = allAuthors.filter(author =>
-        author.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        author.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        author.institution.toLowerCase().includes(searchTerm.toLowerCase())
+    const autoresFiltrados = todosAutores.filter(autor =>
+        autor.nome.toLowerCase().includes(termoBusca.toLowerCase()) ||
+        autor.email.toLowerCase().includes(termoBusca.toLowerCase()) ||
+        autor.universidade.toLowerCase().includes(termoBusca.toLowerCase())
     );
 
-    // Lógica de paginação
-    const indexOfLastAuthor = currentPage * authorsPerPage;
-    const indexOfFirstAuthor = indexOfLastAuthor - authorsPerPage;
-    const currentAuthors = filteredAuthors.slice(indexOfFirstAuthor, indexOfLastAuthor);
-    const totalPages = Math.ceil(filteredAuthors.length / authorsPerPage);
+    const indiceUltimoAutor = paginaAtual * autoresPorPagina;
+    const indicePrimeiroAutor = indiceUltimoAutor - autoresPorPagina;
+    const autoresAtuais = autoresFiltrados.slice(indicePrimeiroAutor, indiceUltimoAutor);
+    const totalPaginas = Math.ceil(autoresFiltrados.length / autoresPorPagina);
 
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+    const paginar = (numeroPagina) => setPaginaAtual(numeroPagina);
 
-    const pageNumbers = [];
-    for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
+    const numerosPaginas = [];
+    for (let i = 1; i <= totalPaginas; i++) {
+        numerosPaginas.push(i);
     }
 
-    // Funções para abrir/fechar modais
-    const handleOpenRegisterModal = () => setShowRegisterModal(true);
-    const handleCloseRegisterModal = () => setShowRegisterModal(false);
+    const abrirModalCadastro = () => setMostrarModalCadastro(true);
+    const fecharModalCadastro = () => setMostrarModalCadastro(false);
 
-    const handleOpenUpdateModal = (author) => {
-        setSelectedAuthor(author);
-        setShowUpdateModal(true);
+    const abrirModalEdicao = (autor) => {
+        setAutorSelecionado(autor);
+        setMostrarModalEdicao(true);
     };
-    const handleCloseUpdateModal = () => setShowUpdateModal(false);
+    const fecharModalEdicao = () => setMostrarModalEdicao(false);
 
-    // Funções de callback para quando o modal de cadastro/edição tiver sucesso
-    const handleRegisterSuccess = (newAuthor) => {
-        // Gera um novo ID simples (em um app real, o backend faria isso)
-        const newId = (parseInt(allAuthors[allAuthors.length - 1].id) + 1).toString().padStart(2, '0');
-        setAllAuthors([...allAuthors, { ...newAuthor, id: newId }]);
-        // Opcional: Redirecionar para a primeira página ou ajustar a paginação
-        setCurrentPage(1);
+    const aoCadastrarSucesso = (novoAutor) => {
+        const novoId = (parseInt(todosAutores[todosAutores.length - 1].id) + 1).toString().padStart(2, '0');
+        setTodosAutores([...todosAutores, { ...novoAutor, id: novoId }]);
+        setPaginaAtual(1);
     };
 
-    const handleUpdateSuccess = (updatedAuthor) => {
-        setAllAuthors(allAuthors.map(author =>
-            author.id === updatedAuthor.id ? updatedAuthor : author
+    const aoEditarSucesso = (autorEditado) => {
+        setTodosAutores(todosAutores.map(autor =>
+            autor.id === autorEditado.id ? autorEditado : autor
         ));
     };
-
 
     return (
         <div className="authors-container">
@@ -79,28 +71,25 @@ export default function Autor() {
             <div className="authors-content">
                 <h1 className="authors-title">Autores</h1>
 
-                {/* Header com busca e botões */}
                 <div className="authors-header">
                     <div className="search-bar">
                         <input
                             type="text"
-                            placeholder="Buscar por nome, sobrenome, instituição, etc."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
+                            placeholder="Buscar por nome, e-mail, universidade, etc."
+                            value={termoBusca}
+                            onChange={(e) => setTermoBusca(e.target.value)}
                         />
                     </div>
                     <div className="header-buttons">
                         <button className="filter-button">
                             <span className="filter-icon">⚙️</span> Filtros
                         </button>
-                        {/* Botão para abrir o modal de CADASTRO */}
-                        <button className="add-author-button" onClick={handleOpenRegisterModal}>
+                        <button className="add-author-button" onClick={abrirModalCadastro}>
                             <span className="plus-icon">+</span> Cadastrar Autor
                         </button>
                     </div>
                 </div>
 
-                {/* Tabela de Autores */}
                 <div className="authors-table-wrapper">
                     <table className="authors-table">
                         <thead>
@@ -108,26 +97,25 @@ export default function Autor() {
                                 <th>ID</th>
                                 <th>Nome</th>
                                 <th>E-mail</th>
-                                <th>Instituição</th>
+                                <th>Universidade</th>
                                 <th>PIs Registradas</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {currentAuthors.map(author => (
-                                <tr key={author.id}>
-                                    <td>{author.id}</td>
-                                    <td>{author.name}</td>
-                                    <td>{author.email}</td>
-                                    <td>{author.institution}</td>
+                            {autoresAtuais.map(autor => (
+                                <tr key={autor.id}>
+                                    <td>{autor.id}</td>
+                                    <td>{autor.nome}</td>
+                                    <td>{autor.email}</td>
+                                    <td>{autor.universidade}</td>
                                     <td>
                                         <span className="registered-pis-badge">
-                                            {author.registeredPIs}
+                                            {autor.pisRegistradas}
                                         </span>
                                     </td>
                                     <td>
-                                        {/* Botão para abrir o modal de EDIÇÃO */}
-                                        <button className="edit-author-button" onClick={() => handleOpenUpdateModal(author)}>
+                                        <button className="edit-author-button" onClick={() => abrirModalEdicao(autor)}>
                                             ✏️
                                         </button>
                                     </td>
@@ -137,31 +125,30 @@ export default function Autor() {
                     </table>
                 </div>
 
-                {/* Paginação */}
                 <div className="authors-pagination">
                     <span className="pagination-info">
-                        Exibindo {indexOfFirstAuthor + 1} de {Math.min(indexOfLastAuthor, filteredAuthors.length)} de {filteredAuthors.length} autores
+                        Exibindo {indicePrimeiroAutor + 1} de {Math.min(indiceUltimoAutor, autoresFiltrados.length)} de {autoresFiltrados.length} autores
                     </span>
                     <div className="pagination-controls">
                         <button
-                            onClick={() => paginate(currentPage - 1)}
-                            disabled={currentPage === 1}
+                            onClick={() => paginar(paginaAtual - 1)}
+                            disabled={paginaAtual === 1}
                             className="pagination-button"
                         >
                             Anterior
                         </button>
-                        {pageNumbers.map(number => (
+                        {numerosPaginas.map(numero => (
                             <button
-                                key={number}
-                                onClick={() => paginate(number)}
-                                className={`pagination-button ${currentPage === number ? 'active' : ''}`}
+                                key={numero}
+                                onClick={() => paginar(numero)}
+                                className={`pagination-button ${paginaAtual === numero ? 'active' : ''}`}
                             >
-                                {number}
+                                {numero}
                             </button>
                         ))}
                         <button
-                            onClick={() => paginate(currentPage + 1)}
-                            disabled={currentPage === totalPages}
+                            onClick={() => paginar(paginaAtual + 1)}
+                            disabled={paginaAtual === totalPaginas}
                             className="pagination-button"
                         >
                             Próxima
@@ -170,20 +157,18 @@ export default function Autor() {
                 </div>
             </div>
 
-            {/* Renderizar o modal de CADASTRO apenas se showRegisterModal for true */}
-            {showRegisterModal && (
+            {mostrarModalCadastro && (
                 <RegisterAuthorModal
-                    onClose={handleCloseRegisterModal}
-                    onRegisterSuccess={handleRegisterSuccess}
+                    onClose={fecharModalCadastro}
+                    onRegisterSuccess={aoCadastrarSucesso}
                 />
             )}
 
-            {/* Renderizar o modal de EDIÇÃO apenas se showUpdateModal for true e um autor estiver selecionado */}
-            {showUpdateModal && selectedAuthor && (
+            {mostrarModalEdicao && autorSelecionado && (
                 <UpdateAuthorModal
-                    onClose={handleCloseUpdateModal}
-                    author={selectedAuthor}
-                    onUpdateSuccess={handleUpdateSuccess}
+                    onClose={fecharModalEdicao}
+                    author={autorSelecionado}
+                    onUpdateSuccess={aoEditarSucesso}
                 />
             )}
         </div>

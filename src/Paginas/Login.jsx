@@ -1,5 +1,5 @@
 import React from 'react';
-import '../Telas.css';
+import '../Paginas/Telas.css';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {

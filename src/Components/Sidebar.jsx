@@ -1,13 +1,17 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import '../Components/Sidebar.css'; // ajuste o caminho conforme sua estrutura
+
 export default function Sidebar() {
     const navigate = useNavigate();
 
     return (
         <div className="container">
             {/* Sidebar */}
+            
             <div className="sidebar">
+
                 <img src="imagens/Sistema-Logo.png" alt="UERN inova" width="150" />
                 <nav className="nav">
                     <button onClick={() => navigate("/dashboard")}>
@@ -34,21 +38,7 @@ export default function Sidebar() {
                 se não forem intencionais, considere removê-los ou estilizá-los com CSS */}
             <div className="p-4 text-sm">
                 <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
-                <br/>
+               
                 <br/>
                 <br/>
                 <br/>

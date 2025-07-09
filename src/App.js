@@ -8,6 +8,7 @@ import PatenteDetalhes from "./Paginas/PatenteDetalhes"; // <- componente de det
 import CadastroPI from './Paginas/CadastroPI.jsx';
 import Payments from './Paginas/Payments';
 import Autor from './Paginas/Autor';
+
 function App() {
   return (
     <Router>

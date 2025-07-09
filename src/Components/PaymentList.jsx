@@ -1,5 +1,6 @@
 import React from 'react';
 import './PaymentList.css'; // Estilos específicos da lista de pagamentos
+import Sidebar from '../Components/Sidebar';
 
 const PaymentList = ({ payments, monthName, year }) => {
   const formatCurrency = (amount) => {

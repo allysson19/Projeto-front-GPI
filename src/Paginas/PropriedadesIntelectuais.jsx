@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Sidebar from "../Components/Sidebar"; // ajuste o caminho conforme sua estrutura
 import "./PI.css"; 
-import "../Tela2.css"; // para garantir que o layout seja aplicado
+import "../Paginas/Tela2.css"; // para garantir que o layout seja aplicado
 
 
 
@@ -23,8 +23,8 @@ const navigate = useNavigate(); // 👈 define a função de navegação
       <div className="container">
       {/* Sidebar */}
       <div className="sidebar">
-        <img src="public/Sistema-Logo.png" alt="UERN inova" width="150" />
         <nav className="nav">
+      <img src="imagens/Sistema-Logo.png" alt="UERN inova" width="150" height="auto"/>
            <button onClick={() => navigate("/dashboard")}>
           Inicio
         </button>

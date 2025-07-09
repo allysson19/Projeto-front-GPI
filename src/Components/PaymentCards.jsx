@@ -11,15 +11,14 @@ export default function PaymentCards() {
 
   return (
     <div className="cards-wrapper">
-      {cards.map((card, index) => (
-        <div className="payment-card" key={index} style={{ backgroundColor: card.bg }}>
-          <span className="icon">{card.icon}</span>
-          <div>
-            <h3>{card.label}</h3>
-            <p>{card.value} — <strong>{card.amount}</strong></p>
-          </div>
-        </div>
-      ))}
+  {cards.map((card, index) => (
+    <div className="payment-card" key={index} style={{ backgroundColor: card.bg }}>
+      <span className="icon">{card.icon}</span>
+      <h3>{card.label}</h3>
+      <div className="value">{card.value}</div>
+      <p>{card.amount}</p>
     </div>
+  ))}
+</div>
   );
 }
